@@ -51,6 +51,18 @@ pipeline:
                       spec:
                         paths:
                           - /harness/target/*.xml
+              - step:
+                  type: Run
+                  name: run test
+                  identifier: run_test
+                  spec:
+                    shell: Sh
+                    command: mvn test
+                    reports:
+                      type: JUnit
+                      spec:
+                        paths:
+                          - target/surefire-reports/*.xml
           platform:
             os: Linux
             arch: Amd64
