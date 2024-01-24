@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_willemjanvanasseldonk_jhttp_1706090953719-pr-trigger-input-set
+  identifier: Build_willemjanvanasseldonk_jhttp_1706090953719prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_willemjanvanasseldonk_jhttp_1706090953719
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
