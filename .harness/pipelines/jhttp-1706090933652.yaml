@@ -27,7 +27,7 @@ pipeline:
                     shell: Sh
                     command: |-
                       echo "Welcome to Harness CI"
-                      mvn -B package --file pom.xml
+                      echo mvn -B package --file pom.xml
               - step:
                   type: Run
                   name: build
