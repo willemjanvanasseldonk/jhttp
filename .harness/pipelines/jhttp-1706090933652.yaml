@@ -13,6 +13,8 @@ pipeline:
     - stage:
         identifier: build
         name: build
+        caching:
+          enabled: true
         spec:
           cloneCodebase: true
           execution:
