@@ -1,72 +1,54 @@
 pipeline:
+  name: Build java
   identifier: Build_willemjanvanasseldonk_jhttp_1706090953719
-  name: Build jhttp
-  orgIdentifier: default
   projectIdentifier: default_project
+  orgIdentifier: default
   properties:
     ci:
       codebase:
-        build: <+input>
         connectorRef: account.Github_OAuth_1706090911781
         repoName: willemjanvanasseldonk/jhttp
+        build: <+input>
   stages:
     - stage:
-        identifier: build
-        name: build
-        caching:
-          enabled: true
+        name: Build
+        identifier: Build
+        description: ""
+        type: CI
         spec:
+          caching:
+            enabled: true
           cloneCodebase: true
-          execution:
-            steps:
-              - step:
-                  identifier: setup_java
-                  type: Action
-                  name: setup java
-                  spec:
-                    uses: actions/setup-java@v3
-                    with:
-                      distribution: temurin
-                      java-version: "16"
-              - step:
-                  identifier: build_java_app
-                  type: Run
-                  name: Build Java App
-                  spec:
-                    shell: Sh
-                    command: |-
-                      echo "Welcome to Harness CI"
-                      mvn -B package --file pom.xml
-              - step:
-                  type: Run
-                  name: Build Test
-                  identifier: build_test
-                  spec:
-                    connectorRef: account.harnessImage
-                    image: maven:3.8-jdk-11
-                    shell: Sh
-                    command: mvn clean package dependency:copy-dependencies
-              - step:
-                  type: Run
-                  name: Run Test
-                  identifier: tests
-                  spec:
-                    shell: Sh
-                    command: |-
-                      mvn clean test
-                      echo Test WJ
-                      ls -laR /harness/target
-                  reports:
-                    type: JUnit
-                    spec:
-                      paths:
-                        - target/surefire-reports/*.xml
           platform:
             os: Linux
             arch: Amd64
           runtime:
             type: Cloud
             spec: {}
-        type: CI
-        delegateSelectors:
-          - firstk8sdel
+          execution:
+            steps:
+              - step:
+                  type: RunTests
+                  name: RunTests_1
+                  identifier: RunTests_1
+                  spec:
+                    language: Java
+                    buildTool: Maven
+                    args: test
+                    packages: io.harness
+                    runOnlySelectedTests: true
+                    postCommand: mvn package -DskipTests
+                    reports:
+                      type: JUnit
+                      spec:
+                        paths:
+                          - target/surefire-reports/*.xml
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: BuildAndPushDockerRegistry_1
+                  identifier: BuildAndPushDockerRegistry_1
+                  spec:
+                    connectorRef: YOUR_DOCKER_CONNECTOR_ID
+                    repo: YOUR_DOCKER_HUB_USERNAME/DOCKER_REPO_NAME
+                    tags:
+                      - <+pipeline.sequenceId>
