@@ -20,6 +20,15 @@ pipeline:
           execution:
             steps:
               - step:
+                  identifier: setup_java
+                  type: Action
+                  name: setup java
+                  spec:
+                    uses: actions/setup-java@v3
+                    with:
+                      distribution: temurin
+                      java-version: "16"
+              - step:
                   identifier: build_java_app
                   type: Run
                   name: Build Java App
