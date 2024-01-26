@@ -30,7 +30,7 @@ pipeline:
                       mvn -B package --file pom.xml
               - step:
                   type: Run
-                  name: build test
+                  name: Build Test
                   identifier: build_test
                   spec:
                     connectorRef: account.harnessImage
@@ -39,16 +39,16 @@ pipeline:
                     command: mvn clean package dependency:copy-dependencies
               - step:
                   type: Run
-                  name: run test
-                  identifier: run_test
+                  name: Run Test
+                  identifier: tests
                   spec:
                     shell: Sh
                     command: mvn test
-                    reports:
-                      type: JUnit
-                      spec:
-                        paths:
-                          - target/surefire-reports/*.xml
+                  reports:
+                    type: JUnit
+                    spec:
+                      paths:
+                        - target/surefire-reports/*.xml
           platform:
             os: Linux
             arch: Amd64
@@ -56,3 +56,5 @@ pipeline:
             type: Cloud
             spec: {}
         type: CI
+        delegateSelectors:
+          - firstk8sdel
