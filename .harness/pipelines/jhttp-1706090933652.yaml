@@ -55,7 +55,7 @@ pipeline:
                     command: |-
                       mvn clean test
                       echo Test WJ
-                      ls /harness/target
+                      ls -laR /harness/target
                   reports:
                     type: JUnit
                     spec:
