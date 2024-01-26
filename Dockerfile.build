@@ -6,7 +6,8 @@ LABEL maintainer="Shivakumar Ningappa <shivagowda@gmail.com>"
 COPY . .
 
 # Build the Java server app
-RUN mvn clean package -DskipTests
+# RUN mvn clean package -DskipTests
+RUN mvn clean package
 
 # Expose default port for external communication
 EXPOSE 8888
