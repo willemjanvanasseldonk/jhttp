@@ -43,7 +43,10 @@ pipeline:
                   identifier: tests
                   spec:
                     shell: Sh
-                    command: mvn clean test
+                    command: |-
+                      mvn clean test
+                      echo Test WJ
+                      ls target/surefire-reports
                   reports:
                     type: JUnit
                     spec:
