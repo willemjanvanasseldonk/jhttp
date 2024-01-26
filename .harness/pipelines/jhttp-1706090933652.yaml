@@ -46,7 +46,7 @@ pipeline:
                     command: |-
                       mvn clean test
                       echo Test WJ
-                      ls target/surefire-reports
+                      ls /harness/target/surefire-reports
                   reports:
                     type: JUnit
                     spec:
