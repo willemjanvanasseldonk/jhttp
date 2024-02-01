@@ -65,7 +65,6 @@ public class HttpClientTest {
         testRequest(uri, responsePath, 200);
     }
     
-    @Test
     private void testRequest(String uri, String responsePath, int expectedStatus) throws ParseException,
             IOException {
         final HttpResponse response = getResponse(uri);
